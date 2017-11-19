@@ -1,0 +1,36 @@
+---
+- name: Install epel
+  package:
+    name: epel-release
+    state: latest
+
+- name: Install certbot
+  package:
+    name: certbot
+    state: latest
+
+- name: Create scripts folder
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ certbot_user }}"
+  with_items:
+    - "/scripts"
+    - "{{ certbot_webroot }}"
+
+- name: Copy the script
+  template:
+    src: cert_issue_and_renew.sh.j2
+    dest: /scripts/cert_issue_and_renew.sh
+    owner: "{{ certbot_user }}"
+    mode: 0755
+  notify:
+    - execute script
+
+- name: Add a crontab for generating and renewing the certificates
+  cron:
+    name: Certbot automatic renewal
+    job: "/scripts/cert_issue_and_renew.sh"
+    minute: 0
+    hour: 0
+    user: "{{ certbot_user }}"

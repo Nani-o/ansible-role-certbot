@@ -1,0 +1,3 @@
+---
+- name: execute script
+  shell: /scripts/cert_issue_and_renew.sh

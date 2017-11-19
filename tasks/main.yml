@@ -1,0 +1,10 @@
+---
+- block:
+  - name: Include nginx role
+    include_role:
+      name: nginx
+
+  - name: Installing certbot
+    import_tasks: install.yml
+  tags:
+    - certbot
