@@ -14,15 +14,14 @@ env:
 #  - lxd_container_alias: debian/jessie/amd64
 
 install:
-  - curl ifconfig.me
-  - host $(curl ifconfig.me)
+  - export PUBLIC_DOMAIN=$(host $(curl -s ifconfig.me) | awk '{print $NF}' | sed 's/\.$//')
   # Installing latest ansible
-#  - sudo -H pip install ansible
+  - sudo -H pip install ansible
   # Cloning testing template
-#  - sudo mkdir /etc/ansible
-#  - sudo chown -R "${USER}:" /etc/ansible
-#  - git clone https://github.com/Nani-o/ansible-template-role-test /etc/ansible
+  - sudo mkdir /etc/ansible
+  - sudo chown -R "${USER}:" /etc/ansible
+  - git clone https://github.com/Nani-o/ansible-template-role-test /etc/ansible
 
-# script:
+script:
   # Run tests
-#  - bash /etc/ansible/test.sh
+  - bash /etc/ansible/test.sh

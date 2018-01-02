@@ -11,7 +11,8 @@ Compatibility
 Requirements
 ------------
 
-You need to setup nginx.
+You need to setup nginx. 
+This role automatically include a role named nginx at start, you can use whatever role to create the webroot, I use the one by [geerlingguy](https://github.com/geerlingguy/ansible-role-nginx).
 
 Example Playbook
 ----------------

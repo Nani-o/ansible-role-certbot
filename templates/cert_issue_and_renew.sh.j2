@@ -2,5 +2,5 @@
 {{ ansible_managed | comment }}
 
 {% for domain in certbot_domains %}
-certbot certonly --quiet --non-interactive --agree-tos --email {{ certbot_email }} --keep-until-expiring --webroot -w {{ certbot_webroot }} -d "{{ domain }}"
+certbot certonly {% if certbot_debug %}--debug{% endif %} --quiet --non-interactive --agree-tos --email {{ certbot_email }} --keep-until-expiring --webroot -w {{ certbot_webroot }} -d "{{ domain }}"
 {% endfor %}

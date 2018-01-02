@@ -1,0 +1,20 @@
+---
+- hosts: container
+  vars:
+    certbot_user: root
+    certbot_email: placeholder@gmail.com
+    certbot_debug: true
+    certbot_domains:
+      - "{{ lookup('env', 'PUBLIC_DOMAIN') }}"
+    certbot_webroot: /srv/letsencrypt
+
+    nginx_remove_default_vhost: true
+    nginx_vhosts:
+      - listen: "80 default_server"
+        server_name: "_"
+        extra_parameters: |
+          location /.well-known/acme-challenge/ {
+              root /srv/letsencrypt;
+          }
+  roles:
+    - role-to-test
